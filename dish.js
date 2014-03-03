@@ -134,6 +134,9 @@ Dish.prototype.eof = function(x, y) {
 
 /**
  * Spawn new life in this dish, according to the input data
+ *
+ * @see constructor
+ * @param {String} input digits
  */
 
 Dish.prototype.input = function(input) {
