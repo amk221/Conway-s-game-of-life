@@ -29,6 +29,8 @@ Cell.prototype.offsets = [
 /**
  * Build a unique key to represent this cell
  *
+ * @param {Integer} x
+ * @param {Integer} y
  * @return {String}
  */
 
@@ -37,8 +39,10 @@ Cell.prototype.buildKey = function(x, y) {
 };
 
 /**
- * Accept a key string and parse it into a coordinates array
- * e.g. "3,4"
+ * Accept a key string and parse it into a coordinates array e.g. "3,4"
+ *
+ * @param {String}
+ * @return {Array}
  */
 
 Cell.prototype.parseKey = function(key) {

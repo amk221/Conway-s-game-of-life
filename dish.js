@@ -119,6 +119,10 @@ Dish.prototype.getCells = function() {
 /**
  * When x & y are supplied, check they represent the eof.
  * When no arguments are provided, return the eof.
+ *
+ * @param {Integer|null}
+ * @param {Integer|null}
+ * @return {Boolean|Array}
  */
 
 Dish.prototype.eof = function(x, y) {

@@ -171,9 +171,9 @@ describe('evolve', function() {
     var cell = dish.at(1,2);
 
     assert.equal(cell.numOfLivingNeighbours(), 0);
-    assert(cell.alive(), 'alive in the present..');
+    assert(cell.alive(), 'alive in the present...');
     cell.evolve();
-    assert(!cell.nextGen(), '..will not live on to the next generation');
+    assert(!cell.nextGen(), '...will not live on to the next generation');
   });
 
   it('lives on with two alive neighbours (rule #2)', function() {
