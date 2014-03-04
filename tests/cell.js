@@ -206,7 +206,7 @@ describe('evolve', function() {
     assert(!cell.nextGen(), '...will not live on to the next generation');
   });
 
-  it('comes back to life with exactly 3 neighbours', function() {
+  it('comes back to life with exactly 3 neighbours (rule #4)', function() {
     var dish = new Dish();
     var cell = dish.at(0,1);
 

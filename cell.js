@@ -136,7 +136,7 @@ Cell.prototype.sustain = function() {
 
 /**
  * Shortcut function for spawning a new cell to life _and_
- * simulataneously adding it to the dish.
+ * simultaneously adding it to the dish.
  */
 
 Cell.prototype.generate = function() {
