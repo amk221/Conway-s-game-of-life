@@ -268,28 +268,24 @@ describe('aliveNeighbours', function() {
 
 describe('neighbours', function() {
   it('returns an array of all surrounding cells', function() {
-    var dish, neighbours, n1, n2;
+    var dish = new Dish("0,0\n0,1\n0,2\n1,0\n1,1\n2,1\n2,2");
+    var neighbours = dish.at(1,1).neighbours();
+    var expected = [[2,0],[1,0],[0,0],[2,1],[0,1],[2,2],[1,2],[0,2]];
+    var actual = neighbours.map(function(neighbour) {
+      return neighbour.coords(); 
+    });
 
-    dish = new Dish();
-    neighbours = dish.at(0,0).neighbours();
     assert(Array.isArray(neighbours));
     assert.equal(neighbours.length, 8);
-
-    dish = new Dish("0,0\n0,1\n0,2\n1,0\n1,1\n2,1\n2,2");
-    neighbours = dish.at(1,1).neighbours();
-    assert(Array.isArray(neighbours));
-    assert.equal(neighbours.length, 8, 'eight surrounding cells');
-    assert(neighbours[1].alive(), 'a neighbour, and alive');
-
-    n1 = neighbours.filter(function(neighbour) {
-      return neighbour.x === 2 && neighbour.y === 0;
-    })[0];
-    assert(n1.dead(), 'a neighbour, but not alive');
-
-    n2 = neighbours.filter(function(neighbour) {
-      return neighbour.x === 0 && neighbour.y === 2;
-    })[0];
-    assert(n2.alive(), 'a neighbour, and alive');
+    assert.deepEqual(actual, expected);
+    assert(neighbours[0].dead());
+    assert(neighbours[1].alive());
+    assert(neighbours[2].alive());
+    assert(neighbours[3].alive());
+    assert(neighbours[4].alive());
+    assert(neighbours[5].alive());
+    assert(neighbours[6].dead());
+    assert(neighbours[7].alive());
   });
 });
 
