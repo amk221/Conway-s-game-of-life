@@ -17,24 +17,14 @@ var Cell = function(dish, x, y) {
 };
 
 /**
- * Offset integers used to find a cell's nearest neighbours.
- */
-
-Cell.prototype.offsets = [
-  [-1, 1], [0, 1], [1, 1],
-  [-1, 0],         [1, 0],
-  [-1,-1], [0,-1], [1,-1]
-];
-
-/**
- * Build a unique key to represent this cell
+ * Build a unique key from the coordinates passed in
  *
  * @param {Integer} x
  * @param {Integer} y
  * @return {String}
  */
 
-Cell.prototype.buildKey = function(x, y) {
+Cell.buildKey = function(x, y) {
   return x + ',' + y;
 };
 
@@ -45,9 +35,19 @@ Cell.prototype.buildKey = function(x, y) {
  * @return {Array}
  */
 
-Cell.prototype.parseKey = function(key) {
+Cell.parseKey = function(key) {
   return key.split(',');
 };
+
+/**
+ * Offset integers used to find a cell's nearest neighbours.
+ */
+
+Cell.offsets = [
+  [-1, 1], [0, 1], [1, 1],
+  [-1, 0],         [1, 0],
+  [-1,-1], [0,-1], [1,-1]
+];
 
 /**
  * Return this cell's unique key
@@ -56,7 +56,7 @@ Cell.prototype.parseKey = function(key) {
  */
 
 Cell.prototype.key = function() {
-  return this.buildKey(this.x, this.y);
+  return Cell.buildKey(this.x, this.y);
 };
 
 /**
@@ -224,8 +224,8 @@ Cell.prototype.aliveNeighbours = function() {
 Cell.prototype.neighbours = function() {
   var neighbours = [];
   
-  for (var i = 0, l = this.offsets.length; i < l; i++) {
-    var coords = this.offsets[i];
+  for (var i = 0, l = Cell.offsets.length; i < l; i++) {
+    var coords = Cell.offsets[i];
     var x      = this.x + coords[0];
     var y      = this.y + coords[1];
     var cell   = this.dish.at(x, y);

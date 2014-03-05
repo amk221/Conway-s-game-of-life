@@ -6,7 +6,7 @@ var input  = '';
 process.stdin.on('data', function(buffer) {
   var line = buffer.toString();
 
-  if (line == Dish.prototype.eof().join(',') + "\n") {
+  if (line == Dish.eof().join(',') + "\n") {
     var dish = new Dish(input);
 
     switch (mode) {

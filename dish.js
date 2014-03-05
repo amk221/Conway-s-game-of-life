@@ -25,6 +25,37 @@ var Dish = function(input) {
 };
 
 /**
+ * When x & y are supplied, check they represent the eof.
+ * When no arguments are provided, return the eof.
+ *
+ * @param {Integer|null}
+ * @param {Integer|null}
+ * @return {Boolean|Array}
+ */
+
+Dish.eof = function(x, y) {
+  var e = -1;
+  return (arguments.length === 2) ?
+    (x === e && y === e) :
+    [e, e];
+};
+
+/**
+ * Find positive & negative integers in the input string
+ *
+ * @param {String}
+ * @return {Array}
+ */
+
+Dish.parse = function(string) {
+  var digits = ((string || '').match(/(-?\d+)\n?/g) || []);
+
+  return digits.map(function(d) {
+    return parseInt(d, 10);
+  });
+};
+
+/**
  * Add a cell to this Dish's fake 'grid'
  * (It's actually just a hash of locations, for quicker look-up)
  *
@@ -46,7 +77,7 @@ Dish.prototype.add = function(cell) {
  */
 
 Dish.prototype.occupied = function(x, y) {
-  return !!this.cells[Cell.prototype.buildKey(x, y)];
+  return !!this.cells[Cell.buildKey(x, y)];
 };
 
 /**
@@ -58,21 +89,6 @@ Dish.prototype.advance = function() {
 };
 
 /**
- * Find positive & negative integers in the input tring
- *
- * @param {String}
- * @return {Array}
- */
-
-Dish.prototype.parse = function(string) {
-  var digits = ((string || '').match(/(-?\d+)\n?/g) || []);
-
-  return digits.map(function(d) {
-    return parseInt(d, 10);
-  });
-};
-
-/**
  * Return the cell at the given coordinates
  * (Creating a new one if the cell is empty)
  *
@@ -81,8 +97,8 @@ Dish.prototype.parse = function(string) {
  */
 
 Dish.prototype.at = function(x, y) {
-  var args = (arguments.length === 1) ? Cell.prototype.parseKey(x) : arguments;
-  var key  = Cell.prototype.buildKey.apply(null, args);
+  var args = (arguments.length === 1) ? Cell.parseKey(x) : arguments;
+  var key  = Cell.buildKey.apply(null, args);
 
   return this.cells[key] || new Cell(this, x, y);
 };
@@ -117,22 +133,6 @@ Dish.prototype.getCells = function() {
 };
 
 /**
- * When x & y are supplied, check they represent the eof.
- * When no arguments are provided, return the eof.
- *
- * @param {Integer|null}
- * @param {Integer|null}
- * @return {Boolean|Array}
- */
-
-Dish.prototype.eof = function(x, y) {
-  var e = -1;
-  return (arguments.length === 2) ?
-    (x === e && y === e) :
-    [e, e];
-};
-
-/**
  * Spawn new life in this dish, according to the input data
  *
  * @see constructor
@@ -140,13 +140,13 @@ Dish.prototype.eof = function(x, y) {
  */
 
 Dish.prototype.input = function(input) {
-  var integers = this.parse(input);
+  var integers = Dish.parse(input);
 
   for (var i = 0, l = integers.length; i < l; i+=2) {
     var x = integers[i];
     var y = integers[i+1];
 
-    if (!this.eof(x, y)) {
+    if (!Dish.eof(x, y)) {
       this.at(x, y).generate();
     }
   }
@@ -156,7 +156,7 @@ Dish.prototype.input = function(input) {
  * Begin evolving each cell.
  * 
  * Build their new coordinates in the same format as they were originally
- * input (i.e. One coord per line) 
+ * input (i.e. One coord per line) terminated with the eof.
  *
  * Then, complete the cell evolution & return the output.
  *
@@ -182,7 +182,7 @@ Dish.prototype.output = function() {
     this.at(key).completeEvolution();
   }
 
-  output.push(this.eof());
+  output.push(Dish.eof());
   output = output.join("\n");
 
   return output;

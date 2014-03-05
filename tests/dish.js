@@ -2,14 +2,14 @@ var assert = require('assert');
 var Dish   = require('../dish');
 var Cell   = require('../cell');
 
-describe('EOF', function() {
+describe('eof', function() {
   it('confirms the EOF', function() {
-    assert(Dish.prototype.eof(-1,-1));
-    assert(!Dish.prototype.eof(2,3));
+    assert(Dish.eof(-1,-1));
+    assert(!Dish.eof(2,3));
   });
 
   it('returns the EOF', function() {
-    assert.deepEqual(Dish.prototype.eof(), [-1,-1]);
+    assert.deepEqual(Dish.eof(), [-1,-1]);
   });
 });
 
@@ -36,9 +36,9 @@ describe('occupied', function() {
 
 describe('parse', function() {
   it('converts input string into array of integers', function() {
-    assert.deepEqual(Dish.prototype.parse(''), []);
-    assert.deepEqual(Dish.prototype.parse('1,2,3'), [1,2,3]);
-    assert.deepEqual(Dish.prototype.parse('a,c,b'), []);
+    assert.deepEqual(Dish.parse(''), []);
+    assert.deepEqual(Dish.parse('1,2,3'), [1,2,3]);
+    assert.deepEqual(Dish.parse('a,c,b'), []);
   });
 });
 

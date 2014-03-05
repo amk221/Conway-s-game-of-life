@@ -11,15 +11,15 @@ describe('constructor', function() {
 
 describe('parseKey', function() {
   it('converts a string key into coordinates', function() {
-    assert.deepEqual(Cell.prototype.parseKey('1,2'), [1,2]);
-    assert.deepEqual(Cell.prototype.parseKey('13, 14'), [13,14]);
+    assert.deepEqual(Cell.parseKey('1,2'), [1,2]);
+    assert.deepEqual(Cell.parseKey('13, 14'), [13,14]);
   });
 });
 
 describe('buildKey', function() {
   it('builds a key containing coords', function() {
-    assert.equal(Cell.prototype.buildKey(123, 456), '123,456');
-    assert.equal(Cell.prototype.buildKey('foo', 'bar'), 'foo,bar');
+    assert.equal(Cell.buildKey(123, 456), '123,456');
+    assert.equal(Cell.buildKey('foo', 'bar'), 'foo,bar');
   });
 });
 
