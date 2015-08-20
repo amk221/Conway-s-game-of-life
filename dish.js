@@ -24,8 +24,8 @@ var Dish = function(input) {
  * When x & y are supplied, check they represent the eof.
  * When no arguments are provided, return the eof.
  *
- * @param {Integer|null}
- * @param {Integer|null}
+ * @param {Number|undefined}
+ * @param {Number|undefined}
  * @return {Boolean|Array}
  */
 Dish.eof = function(x, y) {
@@ -64,8 +64,8 @@ Dish.prototype.add = function(cell) {
 /**
  * Check if a cell already occupies the given coordinates.
  *
- * @param {Integer} x coord
- * @param {Integer} y coord
+ * @param {Number} x coord
+ * @param {Number} y coord
  * @return {Boolean}
  */
 Dish.prototype.occupied = function(x, y) {
