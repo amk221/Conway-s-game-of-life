@@ -46,9 +46,9 @@ describe('toString', function() {
     var dish = new Dish();
     var cell = new Cell(dish, 0, 0);
     cell.state.present = 'alive';
-    assert.equal(cell.toString(), '[•]');
+    assert.equal(cell.toString(), '▓▓');
     cell.state.present = 'dead';
-    assert.equal(cell.toString(), '[◦]');
+    assert.equal(cell.toString(), '░░');
   });
 });
 
@@ -143,7 +143,7 @@ describe('nextGen', function() {
     cell.resusitate();
     assert.equal(cell.nextGen(), true);
   });
-  
+
   it('should *actually* live on to the next generation', function() {
     var dish, cell;
 
@@ -159,7 +159,7 @@ describe('nextGen', function() {
     assert.strictEqual(cell.followMe, true, 'exact same cell in memory');
 
     cell = dish.at(1,0);
-    
+
     assert(cell.alive());
     assert.strictEqual(cell.followMe, true);
   });
@@ -249,7 +249,7 @@ describe('numOfLivingNeighbours', function() {
 describe('aliveNeighbours', function() {
   it('returns an array of surrounding cells that are alive', function() {
     var dish, neighbours;
-    
+
     dish = new Dish();
     neighbours = dish.at(0,0).aliveNeighbours();
     assert(Array.isArray(neighbours));
@@ -272,7 +272,7 @@ describe('neighbours', function() {
     var neighbours = dish.at(1,1).neighbours();
     var expected = [[2,0],[1,0],[0,0],[2,1],[0,1],[2,2],[1,2],[0,2]];
     var actual = neighbours.map(function(neighbour) {
-      return neighbour.coords(); 
+      return neighbour.coords();
     });
 
     assert(Array.isArray(neighbours));

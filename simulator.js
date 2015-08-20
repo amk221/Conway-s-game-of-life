@@ -5,28 +5,24 @@ var input  = '';
 
 process.stdin.on('data', function(buffer) {
   var line = buffer.toString();
+  var inputted = (line == Dish.eof().join(',') + "\n")
+  input += line;
 
-  if (line == Dish.eof().join(',') + "\n") {
+  if (inputted) {
     var dish = new Dish(input);
 
-    switch (mode) {
-      case 'grid':
-        for (var i = 1; i <= amount; i++) {
-          console.log('#' + i);
-          console.log(dish.grid());
-          dish.advance();
-        }
-      break;
-
-      default:
-        console.log('Output:');
-        console.log(dish.output());
-      break;
+    if (mode === 'grid') {
+      for (var i = 0; i < amount; i++) {
+        process.stdout.write('#' + i + "\n");
+        process.stdout.write(dish.grid());
+        dish.advance();
+      }
+    } else {
+      process.stdout.write('Output:' + "\n");
+      process.stdout.write(dish.output());
     }
 
     process.exit();
-  } else {
-    input += line;
-  }  
+  }
 });
 

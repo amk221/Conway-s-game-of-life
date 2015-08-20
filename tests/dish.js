@@ -123,7 +123,7 @@ describe('size', function() {
 describe('grid', function() {
   it('generates a grid', function() {
     var dish = new Dish("0,1\n1,0");
-    assert.equal(dish.grid(), "[◦][•]\n[•][◦]\n");
+    assert.equal(dish.grid(), "░░▓▓\n▓▓░░\n");
   });
 });
 

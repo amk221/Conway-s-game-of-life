@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Initialise a `Cell`, associating it with a given petri `Dish`
  *
@@ -5,7 +7,6 @@
  * @param {x} Initial X coordinate of the cell within the dish
  * @param {y} Initial Y coordinate of the cell within the dish
  */
-
 var Cell = function(dish, x, y) {
   this.dish = dish;
   this.x = x;
@@ -19,11 +20,10 @@ var Cell = function(dish, x, y) {
 /**
  * Build a unique key from the coordinates passed in
  *
- * @param {Integer} x
- * @param {Integer} y
+ * @param {Number} x
+ * @param {Number} y
  * @return {String}
  */
-
 Cell.buildKey = function(x, y) {
   return x + ',' + y;
 };
@@ -34,7 +34,6 @@ Cell.buildKey = function(x, y) {
  * @param {String}
  * @return {Array}
  */
-
 Cell.parseKey = function(key) {
   return key.split(',');
 };
@@ -42,7 +41,6 @@ Cell.parseKey = function(key) {
 /**
  * Offset integers used to find a cell's nearest neighbours.
  */
-
 Cell.offsets = [
   [-1, 1], [0, 1], [1, 1],
   [-1, 0],         [1, 0],
@@ -54,7 +52,6 @@ Cell.offsets = [
  *
  * @return {String}
  */
-
 Cell.prototype.key = function() {
   return Cell.buildKey(this.x, this.y);
 };
@@ -64,7 +61,6 @@ Cell.prototype.key = function() {
  *
  * @return {Array}
  */
-
 Cell.prototype.coords = function() {
   return [this.x, this.y];
 };
@@ -74,9 +70,8 @@ Cell.prototype.coords = function() {
  *
  * @return {String}
  */
-
 Cell.prototype.toString = function() {
-  return '[' + (this.alive() ? '•' : '◦') + ']';
+  return this.alive() ? '▓▓' : '░░';
 };
 
 /**
@@ -84,7 +79,6 @@ Cell.prototype.toString = function() {
  *
  * @return {Boolean}
  */
-
 Cell.prototype.alive = function() {
   return this.state.present === 'alive';
 };
@@ -94,7 +88,6 @@ Cell.prototype.alive = function() {
  *
  * @return {Boolean}
  */
-
 Cell.prototype.dead = function() {
   return !this.alive();
 };
@@ -102,7 +95,6 @@ Cell.prototype.dead = function() {
 /**
  * Spawn this cell into life
  */
-
 Cell.prototype.spawn = function() {
   this.state.present = 'alive';
 };
@@ -111,7 +103,6 @@ Cell.prototype.spawn = function() {
  * Kill this cell by marking it as dead
  * (in the next evolutionary step)
  */
-
 Cell.prototype.die = function() {
   this.state.future = 'dead';
 };
@@ -120,7 +111,6 @@ Cell.prototype.die = function() {
  * Bring this cell back to life by marking it as alive
  * (in the next evolutionary step)
  */
-
 Cell.prototype.resusitate = function() {
   this.state.future = 'alive';
 };
@@ -129,7 +119,6 @@ Cell.prototype.resusitate = function() {
  * Sustain this cell by marking it as alive
  * (in the next evolutionary step)
  */
-
 Cell.prototype.sustain = function() {
   this.state.future = 'alive';
 };
@@ -138,7 +127,6 @@ Cell.prototype.sustain = function() {
  * Shortcut function for spawning a new cell to life _and_
  * simultaneously adding it to the dish.
  */
-
 Cell.prototype.generate = function() {
   this.spawn();
   this.dish.add(this);
@@ -150,7 +138,6 @@ Cell.prototype.generate = function() {
  *
  * @return {Boolean}
  */
-
 Cell.prototype.nextGen = function() {
   return this.state.future === 'alive';
 };
@@ -159,7 +146,6 @@ Cell.prototype.nextGen = function() {
  * Determine the future state of this cell by beginning the
  * evolutionary process according to the 4 rules outlined in the PDF
  */
-
 Cell.prototype.beginEvolution = function() {
   var neighbours = this.numOfLivingNeighbours();
 
@@ -178,7 +164,6 @@ Cell.prototype.beginEvolution = function() {
  * Complete the evolutionary process by moving this cell's computed future
  * to be the present.
  */
-
 Cell.prototype.completeEvolution = function() {
   this.state.present = this.state.future;
 };
@@ -187,7 +172,6 @@ Cell.prototype.completeEvolution = function() {
  * Begin and complete a full evolutionary cycle,
  * moving this cell into the future
  */
-
 Cell.prototype.evolve = function() {
   this.beginEvolution();
   this.completeEvolution();
@@ -196,19 +180,17 @@ Cell.prototype.evolve = function() {
 /**
  * Return the number of neighbouring cells that are alive.
  *
- * @return {Integer}
+ * @return {Number}
  */
-
 Cell.prototype.numOfLivingNeighbours = function() {
   return Object.keys(this.aliveNeighbours()).length;
 };
 
 /**
  * Return an array of neighbouring cells that are alive.
- * 
+ *
  * @return {Array}
  */
-
 Cell.prototype.aliveNeighbours = function() {
   return this.neighbours().filter(function(neighbour) {
     return neighbour.alive();
@@ -220,10 +202,9 @@ Cell.prototype.aliveNeighbours = function() {
  *
  * @return {Array}
  */
-
 Cell.prototype.neighbours = function() {
   var neighbours = [];
-  
+
   for (var i = 0, l = Cell.offsets.length; i < l; i++) {
     var coords = Cell.offsets[i];
     var x      = this.x + coords[0];
@@ -238,8 +219,5 @@ Cell.prototype.neighbours = function() {
   return neighbours;
 };
 
-/**
- * Export the `Cell` module
- */
 
 module.exports = Cell;

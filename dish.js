@@ -1,10 +1,7 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-
 var Cell = require('./cell');
+
 
 /**
  * Initialize a petri `Dish` of bacteria cells.
@@ -18,7 +15,6 @@ var Cell = require('./cell');
  *
  * @param {String} coordinates
  */
-
 var Dish = function(input) {
   this.cells = {};
   this.input(input);
@@ -32,7 +28,6 @@ var Dish = function(input) {
  * @param {Integer|null}
  * @return {Boolean|Array}
  */
-
 Dish.eof = function(x, y) {
   var e = -1;
   return (arguments.length === 2) ?
@@ -46,7 +41,6 @@ Dish.eof = function(x, y) {
  * @param {String}
  * @return {Array}
  */
-
 Dish.parse = function(string) {
   var digits = ((string || '').match(/(-?\d+)\n?/g) || []);
 
@@ -61,7 +55,6 @@ Dish.parse = function(string) {
  *
  * @param {Object} Cell instance
  */
-
 Dish.prototype.add = function(cell) {
   if (!this.occupied(cell.x, cell.y)) {
     this.cells[cell.key()] = cell;
@@ -75,7 +68,6 @@ Dish.prototype.add = function(cell) {
  * @param {Integer} y coord
  * @return {Boolean}
  */
-
 Dish.prototype.occupied = function(x, y) {
   return !!this.cells[Cell.buildKey(x, y)];
 };
@@ -83,7 +75,6 @@ Dish.prototype.occupied = function(x, y) {
 /**
  * Advance to the next generation of cells
  */
-
 Dish.prototype.advance = function() {
   this.input(this.output());
 };
@@ -95,7 +86,6 @@ Dish.prototype.advance = function() {
  * @param {Object|String} Accept either x, y or [x, y] for ease of use
  * @return {Object}
  */
-
 Dish.prototype.at = function(x, y) {
   var args = (arguments.length === 1) ? Cell.parseKey(x) : arguments;
   var key  = Cell.buildKey.apply(null, args);
@@ -114,7 +104,6 @@ Dish.prototype.at = function(x, y) {
  *
  * @return {Object}
  */
-
 Dish.prototype.getCells = function() {
   var cells = {};
 
@@ -138,7 +127,6 @@ Dish.prototype.getCells = function() {
  * @see constructor
  * @param {String} input digits
  */
-
 Dish.prototype.input = function(input) {
   var integers = Dish.parse(input);
 
@@ -154,7 +142,7 @@ Dish.prototype.input = function(input) {
 
 /**
  * Begin evolving each cell.
- * 
+ *
  * Build their new coordinates in the same format as they were originally
  * input (i.e. One coord per line) terminated with the eof.
  *
@@ -162,7 +150,6 @@ Dish.prototype.input = function(input) {
  *
  * @return {String}
  */
-
 Dish.prototype.output = function() {
   var output = [];
   var cells  = this.getCells();
@@ -194,15 +181,14 @@ Dish.prototype.output = function() {
  *
  * @return {Array} of coordinates
  */
-
 Dish.prototype.size = function() {
   var x = 0;
   var y = 0;
-  
+
   for (var key in this.cells) {
     var cell = this.cells[key];
-    x = cell.x > x ? cell.x: x;
-    y = cell.y > y ? cell.y: y;
+    x = cell.x > x ? cell.x : x;
+    y = cell.y > y ? cell.y : y;
   }
 
   return [x + 1, y + 1];
@@ -214,15 +200,14 @@ Dish.prototype.size = function() {
  *
  * @return {String}
  */
-
 Dish.prototype.grid = function() {
   var str   = '';
   var size  = this.size();
   var xAxis = size[0];
   var yAxis = size[1];
 
-  for (var y = 0, l = yAxis; y < l; y++) {
-    for (var x = 0; x < xAxis; x++) {
+  for (var x = 0, l = xAxis; x < l; x++) {
+    for (var y = 0; y < yAxis; y++) {
       str += this.at(x, y).toString();
     }
     str += "\n";
