@@ -1,4 +1,4 @@
-# Bacteria
+# :seedling: Conways-Game-of-Life
 
 Code created in response to this brief: [PDF](bacteria.pdf).
 
